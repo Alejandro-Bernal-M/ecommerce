@@ -1,12 +1,13 @@
 const User = require('../models/user')
 
 exports.signup = async (req, res) => {
-  const userFound = await User.findOne({email: req.body.email});
+  const userFoundByEmail = await User.findOne({email: req.body.email});
+  const userFoundByUsername = await User.findOne({username: req.body.username});
 
-  if(userFound){
+  if(userFoundByEmail || userFoundByUsername){
     return res.status(400).json({message: 'User already exists'});
   }else {
-    const {firstName, lastName, username, password, email} = req.body;
+    try{const {firstName, lastName, username, password, email} = req.body;
     const newUser = new User({
       firstName,
       lastName,
@@ -20,5 +21,11 @@ exports.signup = async (req, res) => {
     }else{
       return res.status(400).json({message: 'Error saving the user'});
     }
+  }catch(error){
+    console.log(error);
+    console.log('------------------------')
+    console.log(error.errors)
+    return res.status(400).json({message: 'Something went wrong', errors: error.errors})
+  }
   }
 }
