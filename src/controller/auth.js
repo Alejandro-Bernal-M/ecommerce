@@ -39,11 +39,12 @@ exports.signin = async (req, res) => {
     if(foundUser.authenticate(req.body.password)){
       console.log(foundUser)
       const token = jwt.sign({_id: foundUser._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
-      const { firstName, lastName, email, role, fullName } = foundUser;
+      const {_id, firstName, lastName, email, role, fullName } = foundUser;
 
       return res.status(200).json({
         token,
         user: {
+          _id,
           firstName,
           lastName,
           email,
