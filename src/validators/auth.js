@@ -21,3 +21,10 @@ exports.validateUserRequestSignin = [
   .withMessage('Valid email is required')
 ]
 
+exports.isValidRequest =(req, res, next)=>{
+  const errors = validationResult(req).array();
+  if(errors.length > 0){
+    return res.status(400).json({errors: errors.map(err => err.msg)})
+  }
+  next();
+}
