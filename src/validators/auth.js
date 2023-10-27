@@ -15,4 +15,9 @@ exports.validateUserRequestSignup = [
   .withMessage('password must be atleast 6 characters')
 ];
 
+exports.validateUserRequestSignin = [
+  check('email')
+  .isEmail()
+  .withMessage('Valid email is required')
+]
 
