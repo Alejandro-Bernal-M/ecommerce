@@ -28,3 +28,15 @@ exports.createCategory = async(req, res) => {
   }
 
 };
+
+exports.getCategories = async(req, res) => {
+  try {
+    const categories = await Category.find({});
+    if(categories){
+      res.json({categories})
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'Error fetching categories', error: error})
+  }
+}
