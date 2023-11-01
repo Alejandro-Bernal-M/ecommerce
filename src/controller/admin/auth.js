@@ -37,7 +37,7 @@ exports.signin = async (req, res) => {
     if(!foundUser) return res.status(400).json({message: "Invalid email or password"});
     if(foundUser.authenticate(req.body.password) && foundUser.role === 'admin'){
       console.log(foundUser)
-      const token = jwt.sign({_id: foundUser._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+      const token = jwt.sign({_id: foundUser._id, role: foundUser.role}, process.env.JWT_SECRET, {expiresIn: '1h'});
       const {_id, firstName, lastName, email, role, fullName } = foundUser;
 
       return res.status(200).json({
