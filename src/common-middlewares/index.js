@@ -2,7 +2,15 @@ const jwt = require('jsonwebtoken');
 
 exports.requireSignin = (req, res, next) => {
   const token = req.headers.authorization;
-  const user = jwt.verify(token, process.env.JWT_SECRET);
+  if(!token){
+    res.status(400).json({message: 'Authorization required'})
+  }
+  let user;
+  try {
+    user = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return res.json({error: error, message: 'Token error'});
+  }
   req.user = user;
   console.log('user',user)
   next();
