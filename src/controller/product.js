@@ -2,8 +2,6 @@ const Product = require('../models/product');
 const slugify = require('slugify');
 
 exports.createProduct = async(req, res) => {
-
-  // res.json({file: req.files, body: req.body})
   const {
     name, price, description, category, quantity
   } = req.body;
