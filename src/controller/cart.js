@@ -13,7 +13,7 @@ exports.addItemToCart = async(req, res) => {
           {user: req.user._id, "cartItems.product": product}, 
           {
             "$set":{
-              "cartItems":{
+              "cartItems.$":{
                 ...req.body.cartItems,
                 quantity: item.quantity + req.body.cartItems.quantity,
                 price: item.price + req.body.cartItems.price
