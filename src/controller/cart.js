@@ -19,7 +19,8 @@ exports.addItemToCart = async(req, res) => {
                 price: item.price + req.body.cartItems.price
               }
             }
-          }
+          },
+          {returnDocument: 'after'}
         );
         if(updatedCart){
           return res.json({updatedCart});
@@ -36,7 +37,8 @@ exports.addItemToCart = async(req, res) => {
             "$push":{
               "cartItems": req.body.cartItems
             }
-          }
+          },
+          {returnDocument: 'after'}
         );
         if(updatedCart){
           return res.json({updatedCart});
